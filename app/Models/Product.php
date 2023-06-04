@@ -7,22 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
     protected $table = 'tbl_product';
     protected $primaryKey = 'id';
     protected $fillable = [
         'name',
-        'type',
-        'description',
-        'price',
-        'stock',
-        'status'
+        'type'
     ];
 
-    public function store()
+    protected $hidden = [
+        'created'
+    ];
+
+    public function store(int $type = -1)
     {
-        $product = $this->all();
+        $product = $this;
+
+        if ($type > 0)
+            $product = $product->where('type', $type);
+
+        $product = $product->orderBy('name', 'ASC');
+        $product = $product->get();
+        return $product;
+    }
+
+    public function single(int $id = 0)
+    {
+        $product = $this->where('id', $id)->first();
 
         return $product;
     }
+
 }

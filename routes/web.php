@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\ProductController;
+
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,8 +14,5 @@ use App\Http\Controllers\api\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/api/product/', [ProductController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/detail/{id}', [HomeController::class, 'detail']);
