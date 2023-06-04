@@ -15,4 +15,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/cart', [HomeController::class, 'cart']);
+Route::get('/checkout', [HomeController::class, 'checkout']);
+Route::post('/submit-checkout', [HomeController::class, 'submitcheckout'])->name('submitcheckout');
 Route::get('/detail/{id}', [HomeController::class, 'detail']);

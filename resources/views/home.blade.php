@@ -32,7 +32,7 @@
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            <div class="text-center"><button type="button" class="btn btn-outline-dark mt-auto" onclick="addToCart({{$product["id"]}})">Add to cart</button></div>
                         </div>
                     </div>
                 </div>
@@ -40,5 +40,44 @@
             </div>
         </div>
     </div>
+    <script>
+        let products = {{ Illuminate\Support\Js::from($productData) }}
 
+        function addToCart(id) {
+            var found = false
+            if(cartData != null && cartData.length > 0) {
+                for (let i = 0; i < cartData.length; i++) {
+                    if(cartData[i].id == id) {
+                        cartData[i].qty = parseInt(cartData[i].qty) + 1
+                        localStorage.setItem('cart', JSON.stringify(cartData))
+                        getCartData()
+                        found = true
+                        break
+                    }
+                }
+            }
+            
+            if(!found) {
+                for (let i = 0; i < products.length; i++) {
+                    if(products[i].id == id) {
+                        var toCart = {
+                            id: products[i].id,
+                            name: products[i].name,
+                            price: products[i].price,
+                            qty: 1,
+                        }
+                        
+                        if(cartData == null) localStorage.setItem('cart', JSON.stringify([toCart]))
+                        else {
+                            cartData.push(toCart)
+                            localStorage.setItem('cart', JSON.stringify(cartData))
+                        }
+
+                        getCartData()
+                        setCartQtyItem()
+                    }
+                }
+            }
+        }
+    </script>
 @stop
