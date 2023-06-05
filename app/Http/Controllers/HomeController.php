@@ -28,8 +28,7 @@ class HomeController extends Controller
                 "type" => TransformerController::convertProductType($product->type),
                 "description" => $product->description,
                 "price" => intval($product->price),
-                "stock" => $product->stock,
-                "status" => TransformerController::convertProductStatus($product->status)
+                "image" => $product->image
             ];
         }
 

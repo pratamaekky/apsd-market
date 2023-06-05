@@ -20,7 +20,9 @@ class Admin
             if (Auth::user()->role == 'admin') {
                 return $next($request);
             } else {
-                return redirect('/cms/staff')->with('message', 'Gak bisa lu');
+                return redirect()->to('cms/admins')->withErrors([
+                    'message' => 'Only authenticated users can access that page.',
+                ]);
             }
         } else {
             return redirect('/cms')->with('message', "apalu");

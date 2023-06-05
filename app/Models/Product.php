@@ -10,8 +10,12 @@ class Product extends Model
     protected $table = 'tbl_product';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'sku',
         'name',
-        'type'
+        'type',
+        'price',
+        'image',
+        'description'
     ];
 
     protected $hidden = [
@@ -33,6 +37,13 @@ class Product extends Model
     public function single(int $id = 0)
     {
         $product = $this->where('id', $id)->first();
+
+        return $product;
+    }
+
+    public function getAll(int $start, int $limit)
+    {
+        $product = $this->offset($start)->limit($limit)->get();
 
         return $product;
     }

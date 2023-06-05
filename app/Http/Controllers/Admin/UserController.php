@@ -5,30 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function login()
     {
-        return view('admin.login');
-    }
-
-    private function hash(string $pwd)
-    {
-        $hashPassword = Hash::make($pwd);
-
-        return $hashPassword;
-    }
-
-    private function validateLogin(Request $request)
-    {
-        $this->validate($request,[
-           'username' => 'required',
-           'password' => 'required'
-        ]);
-
-        return 'success';
+        if (!Auth::check()) {
+            return view('admin.login');
+        } else {
+            return view('admin.dashboard');
+        }
     }
 
     public function doLogin(Request $request)
@@ -41,7 +27,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('dashboard');
+            return redirect()->intended('cms');
         }
  
         return back()->withErrors([
@@ -57,6 +43,6 @@ class UserController extends Controller
     
         $request->session()->regenerateToken();
     
-        return redirect('/'); 
+        return redirect('/cms'); 
     }
 }

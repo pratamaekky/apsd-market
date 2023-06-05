@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    @include('admin.includes.head')
-</head>
+@include('admin.includes.head')
 
 <body class="bg-gradient-primary">
 
