@@ -12,6 +12,6 @@
             </div>
         </div>
     @else
-        halaman Dashboard
+        Halaman Dashboard
     @endif
 @stop
